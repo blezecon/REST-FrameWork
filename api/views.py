@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404, render
 from blogs.models import Blog, Comment
 from .serializers import BlogSerializer
 from .serializers import CommentSerializer
+from .paginations import CustomPagination
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -169,6 +170,7 @@ class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
 class EmployeeViewset(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    pagination_class = CustomPagination
 
 # ---------------- Blogs and Comments Views ------------------------
 
