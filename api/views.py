@@ -1,5 +1,5 @@
 from students.models import Student
-from .serializers import StudentSerializer, EmployeeSerializer
+from .serializers import StudentSerializer, EmployeeSerializer, BlogSerializer, CommentSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -9,9 +9,9 @@ from django.http import Http404
 from rest_framework import mixins, generics, viewsets
 from django.shortcuts import get_object_or_404, render
 from blogs.models import Blog, Comment
-from .serializers import BlogSerializer
-from .serializers import CommentSerializer
 from .paginations import CustomPagination
+from .filters import EmployeeFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -170,13 +170,19 @@ class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
 class EmployeeViewset(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    pagination_class = CustomPagination
+    pagination_class = CustomPagination #--------(custom pagination class)--------
+    # filterset_fields = ['designation']  -------(without using filter class)--------
+    filterset_class = EmployeeFilter # -------(using filter class)--------
 
 # ---------------- Blogs and Comments Views ------------------------
 
 class BlogsView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['blog_title', 'blog_body']
+    # search_fields = ['^blog_title'] # for startswith search
+    ordering_fields = ['id', 'blog_title']
 
 class CommentsView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
