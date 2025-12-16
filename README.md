@@ -11,7 +11,7 @@ Follow these steps to run the project locally using a virtual environment.
 
 ```bash
 git clone https://github.com/blezecon/REST-FrameWork.git
-cd Test-Django-Project
+cd REST-FrameWork
 ```
 
 
