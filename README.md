@@ -34,7 +34,7 @@ source ./env/Scripts/activate
 ```bash
 pip install django
 pip install djangorestframework
-pip install djangorestframework
+pip install django-filter
 ```
 
 ### 4. Run file
